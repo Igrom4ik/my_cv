@@ -109,6 +109,13 @@
             transition: all 0.2s ease;
             cursor: default;
             text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        /* Делаем ссылки-теги кликабельными курсорами */
+        a.tech-tag {
+            cursor: pointer;
         }
 
         .tech-tag:hover {
@@ -446,17 +453,18 @@
                 <h3 class="text-[10px] mono text-cp-yellow uppercase mb-6 tracking-[0.2em] font-bold">EQUIPPED_MODULES</h3>
                 
                 <div class="mb-3 text-[10px] text-gray-500 mono tracking-widest">// SOFTWARE_ENGINES</div>
+                <!-- Заменены span на активные ссылки-теги -->
                 <div class="flex flex-wrap gap-2 mb-6">
-                    <span class="tech-tag border-cp-yellow/50 text-cp-yellow">Unreal Engine 5</span>
-                    <span class="tech-tag border-cp-yellow/50 text-cp-yellow">Unity</span>
-                    <span class="tech-tag border-cp-yellow/50 text-cp-yellow">Blender 3D</span>
-                    <span class="tech-tag border-cp-yellow/50 text-cp-yellow">Houdini</span>
-                    <span class="tech-tag border-cp-yellow/50 text-cp-yellow">Substance 3D Painter</span>
-                    <span class="tech-tag border-cp-yellow/50 text-cp-yellow">Substance Designer</span>
-                    <span class="tech-tag border-slate-700 text-gray-400">Gaea</span>
-                    <span class="tech-tag border-slate-700 text-gray-400">RizomUV</span>
-                    <span class="tech-tag border-slate-700 text-gray-400">Marmoset Toolbag</span>
-                    <span class="tech-tag border-slate-700 text-gray-400">Adobe Photoshop</span>
+                    <a href="https://www.unrealengine.com/" target="_blank" class="tech-tag border-cp-yellow/50 text-cp-yellow">Unreal Engine 5</a>
+                    <a href="https://unity.com/" target="_blank" class="tech-tag border-cp-yellow/50 text-cp-yellow">Unity</a>
+                    <a href="https://www.blender.org/" target="_blank" class="tech-tag border-cp-yellow/50 text-cp-yellow">Blender 3D</a>
+                    <a href="https://www.sidefx.com/products/houdini/" target="_blank" class="tech-tag border-cp-yellow/50 text-cp-yellow">Houdini</a>
+                    <a href="https://www.adobe.com/products/substance3d-painter.html" target="_blank" class="tech-tag border-cp-yellow/50 text-cp-yellow">Substance 3D Painter</a>
+                    <a href="https://www.adobe.com/products/substance3d-designer.html" target="_blank" class="tech-tag border-cp-yellow/50 text-cp-yellow">Substance Designer</a>
+                    <a href="https://quadspinner.com/" target="_blank" class="tech-tag border-slate-700 text-gray-400">Gaea</a>
+                    <a href="https://www.rizom-lab.com/" target="_blank" class="tech-tag border-slate-700 text-gray-400">RizomUV</a>
+                    <a href="https://marmoset.co/toolbag/" target="_blank" class="tech-tag border-slate-700 text-gray-400">Marmoset Toolbag</a>
+                    <a href="https://www.adobe.com/products/photoshop.html" target="_blank" class="tech-tag border-slate-700 text-gray-400">Adobe Photoshop</a>
                 </div>
 
                 <div class="mb-3 text-[10px] text-gray-500 mono tracking-widest">// PIPELINE_PROTOCOLS</div>
