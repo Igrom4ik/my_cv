@@ -108,7 +108,6 @@
             cursor: default;
             text-transform: uppercase;
         }
-
         .tech-tag:hover {
             background: var(--neon-yellow);
             border-color: var(--neon-yellow);
@@ -168,10 +167,10 @@
             100% { top: 105%; opacity: 0; }
         }
 
-        /* Core System Bars (HP, MP, SP) */
+        /* Core System Bars */
         .sys-bar-container {
             background: rgba(0,0,0,0.8);
-            height: 16px; /* Увеличена высота бара */
+            height: 16px;
             border: 1px solid var(--border-tech);
             position: relative;
             transform: skew(-15deg);
@@ -193,7 +192,7 @@
             );
         }
 
-        /* Обновленный яркий пульс с большой амплитудой */
+        /* More defined pulse line */
         .pulse-line {
             position: absolute;
             top: 0;
@@ -230,7 +229,7 @@
                 <div class="relative inline-block mb-4 mt-4 group cursor-pointer">
                     <!-- Avatar with Sci-Fi Cut and Scanline -->
                     <div class="w-32 h-32 avatar-container overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700 border-2 border-cp-yellow relative bg-black">
-                        <img src="avatar.jpg" alt="Profile" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 mix-blend-screen">
+                        <img src="avatar.jpg?v=2026-05-13" alt="Profile" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 mix-blend-screen">
                         <div class="scanline group-hover:opacity-50 group-hover:h-[2px]"></div>
                     </div>
                     <!-- Cyber Badge CP Style -->
@@ -276,7 +275,7 @@
                     <!-- MP -> Core Energy -->
                     <div>
                         <div class="flex justify-between text-[9px] mono mb-1.5 uppercase tracking-widest font-bold">
-                            <span class="text-cp-cyan">ЭНЕРГИЯ ЯДРА (КРЕАТИВ)</span>
+                            <span class="text-cp-cyan">ЯДРО ЭНЕРГИИ</span>
                             <span class="text-cp-cyan">85%</span>
                         </div>
                         <div class="sys-bar-container">
@@ -287,49 +286,12 @@
                     <!-- SP -> RAM/Stamina -->
                     <div>
                         <div class="flex justify-between text-[9px] mono mb-1.5 uppercase tracking-widest font-bold">
-                            <span class="text-cp-yellow">ОПЕРАТИВНАЯ ПАМЯТЬ</span>
+                            <span class="text-cp-yellow">ПРОИЗВОДИТЕЛЬНОСТЬ</span>
                             <span class="text-cp-yellow">90%</span>
                         </div>
                         <div class="sys-bar-container">
                             <div class="sys-bar-fill bg-cp-yellow box-shadow-[0_0_10px_#fcee0a]" style="width: 90%;"></div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Attributes -->
-            <div class="sci-fi-card p-6">
-                <h3 class="text-[10px] mono text-cp-yellow uppercase mb-5 tracking-[0.2em] flex items-center gap-2 font-bold">
-                    <span class="w-2 h-2 bg-cp-yellow inline-block"></span> CORE_ATTRIBUTES
-                </h3>
-                <div class="space-y-4">
-                    <div>
-                        <div class="flex justify-between text-[10px] mb-1 uppercase mono text-gray-300">
-                            <span title="Modular Environment, Architectural Modeling, Props">GEO_MOD // Моделирование</span>
-                            <span class="text-cp-yellow">19.0</span>
-                        </div>
-                        <div class="stat-bar-container"><div class="stat-bar-fill" data-percent="95%"></div></div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-[10px] mb-1 uppercase mono text-gray-300">
-                            <span title="PBR, Trims, Atlases, Baking">TEX_SYS // Текстурирование</span>
-                            <span class="text-cp-yellow">18.0</span>
-                        </div>
-                        <div class="stat-bar-container"><div class="stat-bar-fill" data-percent="90%"></div></div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-[10px] mb-1 uppercase mono text-gray-300">
-                            <span title="LODs, Draw calls, Game-ready">OPT_ENG // Оптимизация</span>
-                            <span class="text-cp-yellow">19.0</span>
-                        </div>
-                        <div class="stat-bar-container"><div class="stat-bar-fill" data-percent="95%"></div></div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-[10px] mb-1 uppercase mono text-gray-300">
-                            <span title="Процессы, ревью, фидбек">LDR_NET // Лидерство</span>
-                            <span class="text-cp-yellow">15.0</span>
-                        </div>
-                        <div class="stat-bar-container"><div class="stat-bar-fill bg-yellow-700" data-percent="75%"></div></div>
                     </div>
                 </div>
             </div>
@@ -355,7 +317,8 @@
                     <span class="w-2 h-2 bg-cp-yellow inline-block animate-pulse"></span> USER_DATA_LOG
                 </h3>
                 <p class="text-sm leading-relaxed text-gray-300 font-light border-l-2 border-cp-yellow pl-4 bg-gradient-to-r from-cp-yellow/5 to-transparent py-2">
-                    Senior Environment Artist с опытом работы в геймдеве более 6 лет. Обладаю широкой насмотренностью и специализируюсь на создании высококачественного окружения для мобильных и кроссплатформенных проектов (Open World, Sandbox). Имеется обширная работа с окружением: отлично знаю как модульный, так и классический пайплайны, активно участвовал в разработке подходов к контенту. <br><br>
+                    Senior Environment Artist с опытом работы в AAA и мобильных проектах, более 6 лет в индустрии. Специализируюсь на создании game-ready окружения и пропсов, modular workflow, UV-развертке, LOD-ах, PBR-текстурировании и оптимизации сцен.
+                    <br><br>
                     Имею опыт в руководстве командой художников: умею выстраивать процессы, контролировать качество (ревью, фидбеки), сроки и технические требования, а также организовывать работу с контентом.
                 </p>
             </section>
@@ -386,8 +349,7 @@
                                 <ul class="space-y-2">
                                     <li><span class="text-cp-yellow mr-2">></span>Применение модульного и классического пайплайнов, участие в разработке подходов к созданию контента.</li>
                                     <li><span class="text-cp-yellow mr-2">></span>Создание уникальных объектов окружения в semi-realistic/realistic стиле: direct modeling архитектуры, скал, террейна и пропсов.</li>
-                                    <li><span class="text-cp-yellow mr-2">></span>Разработка процедурных инструментов в <span class="text-cp-cyan font-bold">Houdini</span> для ускоренной сборки локаций (ландшафты, скалы).</li>
-                                    <li><span class="text-cp-yellow mr-2">></span>Адаптация и оптимизация моделей под строгие тех. требования (мобильные + ПК): game-ready ассеты, LOD-ы, low-poly.</li>
+                                    <li><span class="text-cp-yellow mr-2">></span>Моделирование game-ready элементов окружения и пропсов (low-poly), UV-развертка, LOD-ирование.</li>
                                     <li><span class="text-cp-yellow mr-2">></span>Текстурирование: тайлы, трим-шиты (trims) и атласы для оптимизации draw calls; работа с PBR.</li>
                                     <li><span class="text-cp-yellow mr-2">></span>Настройка материалов, управление освещением и эффектами, композиционные решения.</li>
                                 </ul>
@@ -401,17 +363,14 @@
                         <div class="quest-header flex justify-between items-start mb-2 gap-2 cursor-pointer select-none">
                             <div>
                                 <h4 class="text-sm font-bold text-gray-300 uppercase mono group-hover:text-cp-yellow transition-colors mb-1">Environment Artist (Open World)</h4>
-                                <p class="text-xs text-slate-500 mono group-hover:text-gray-400">Jet Games // Санкт-Петербург // T: -4г 3м</p>
+                                <p class="text-xs text-slate-500 mono group-hover:text-gray-400">Jet Games // ...</p>
                             </div>
                             <span class="quest-icon text-cp-yellow text-xs mono transform transition-all duration-300 mt-1 font-bold group-hover:text-white group-hover:text-shadow-[0_0_5px_rgba(252,238,10,0.8)]">[ + ]</span>
                         </div>
                         <div class="quest-content">
                             <div class="quest-content-inner bg-[#0a0a0c] p-4 border border-[#2a2a2a] mt-2 text-xs text-gray-400 leading-relaxed mono">
                                 <ul class="space-y-2">
-                                    <li><span class="text-slate-600 mr-2 group-hover:text-cp-yellow">></span>Работа над мобильным сетевым sandbox-экшеном (Grand Criminal Online).</li>
-                                    <li><span class="text-slate-600 mr-2 group-hover:text-cp-yellow">></span>Разработка 3D-пропсов и городского окружения: модульные здания, архитектура (интерьеры/экстерьеры).</li>
-                                    <li><span class="text-slate-600 mr-2 group-hover:text-cp-yellow">></span>Полный цикл текстурирования (развертка, запекание, атласы, тайлы) для высокой производительности на смартфонах.</li>
-                                    <li><span class="text-slate-600 mr-2 group-hover:text-cp-yellow">></span>Участие в формировании визуала: грейбоксинг, расстановка объектов, Level dressing.</li>
+                                    <li><span class="text-slate-600 mr-2 group-hover:text-cp-yellow">></span>...</li>
                                 </ul>
                             </div>
                         </div>
@@ -422,16 +381,15 @@
                         <div class="absolute w-2 h-2 bg-slate-600 -left-[4.5px] top-1.5 transition-all group-hover:bg-cp-yellow group-hover:shadow-[0_0_5px_#fcee0a]"></div>
                         <div class="quest-header flex justify-between items-start mb-2 gap-2 cursor-pointer select-none">
                             <div>
-                                <h4 class="text-sm font-bold text-gray-300 uppercase mono group-hover:text-cp-yellow transition-colors mb-1">3D-моделлер</h4>
-                                <p class="text-xs text-slate-500 mono group-hover:text-gray-400">STSTC // Калининград // T: -1г 4м</p>
+                                <h4 class="text-sm font-bold text-gray-300 uppercase mono group-hover:text-cp-yellow transition-colors mb-1">3D Artist</h4>
+                                <p class="text-xs text-slate-500 mono group-hover:text-gray-400">STSTC // ...</p>
                             </div>
                             <span class="quest-icon text-cp-yellow text-xs mono transform transition-all duration-300 mt-1 font-bold group-hover:text-white group-hover:text-shadow-[0_0_5px_rgba(252,238,10,0.8)]">[ + ]</span>
                         </div>
                         <div class="quest-content">
                             <div class="quest-content-inner bg-[#0a0a0c] p-4 border border-[#2a2a2a] mt-2 text-xs text-gray-400 leading-relaxed mono">
                                 <ul class="space-y-2">
-                                    <li><span class="text-slate-600 mr-2 group-hover:text-cp-yellow">></span>Моделирование game-ready элементов окружения и пропсов (low-poly), UV-развертка, LOD-ирование.</li>
-                                    <li><span class="text-slate-600 mr-2 group-hover:text-cp-yellow">></span>Текстурирование, интеграция и настройка моделей в движке (материалы, освещение).</li>
+                                    <li><span class="text-slate-600 mr-2 group-hover:text-cp-yellow">></span>...</li>
                                 </ul>
                             </div>
                         </div>
@@ -462,7 +420,7 @@
                     <span class="tech-tag border-slate-700 text-gray-400">Architectural Modeling</span>
                     <span class="tech-tag border-slate-700 text-gray-400">Tileable Textures</span>
                     <span class="tech-tag border-slate-700 text-gray-400">Trim Sheets</span>
-                    <span class="tech-tag border-slate-700 text-gray-400">Texture Atlas</span>
+                    <span class="tech-tag border-slate-700 text-gray-400">Texture Atlases</span>
                     <span class="tech-tag border-slate-700 text-gray-400">PBR Texturing & Baking</span>
                     <span class="tech-tag border-slate-700 text-gray-400">Optimization & LODs</span>
                     <span class="tech-tag border-slate-700 text-gray-400">Scene composition</span>
@@ -490,11 +448,11 @@
                     <div class="flex gap-4 p-4 bg-[#0a0a0c] border border-[#2a2a2a] hover:border-cp-green/50 transition-colors group relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-8 h-8 bg-neon-green/10 rounded-bl-full transition-transform group-hover:scale-150"></div>
                         <div class="flex-shrink-0 w-10 h-10 border border-neon-green/50 flex items-center justify-center text-neon-green group-hover:shadow-[0_0_15px_rgba(57,255,20,0.3)] bg-black z-10 font-bold">
-                            <span class="mono text-xs">MED</span>
+                            <span class="mono text-xs">AUR</span>
                         </div>
                         <div class="z-10">
-                            <h4 class="text-xs font-bold text-white mb-1 mono">Медицинский модуль_ <span class="text-[8px] text-black bg-neon-green px-1">AURA</span></h4>
-                            <p class="text-[10px] text-gray-400 leading-relaxed mono">Скрытый навык из прошлого. Регенит мораль команды и снимает дебафф «Токсичность» в радиусе 10м.</p>
+                            <h4 class="text-xs font-bold text-white mb-1 mono">Динамический фокус_ <span class="text-[8px] text-black bg-neon-green px-1">ACTIVE</span></h4>
+                            <p class="text-[10px] text-gray-400 leading-relaxed mono">Снижает разброс внимания на 30% во время тяжелых ревью и правок.</p>
                         </div>
                     </div>
 
@@ -505,7 +463,7 @@
                             <span class="mono text-xs">OPT</span>
                         </div>
                         <div class="z-10">
-                            <h4 class="text-xs font-bold text-white mb-1 mono">Оптический имплант_ <span class="text-[8px] text-black bg-cp-yellow px-1">PASSIVE</span></h4>
+                            <h4 class="text-xs font-bold text-white mb-1 mono">Око оптимизатора_ <span class="text-[8px] text-black bg-cp-yellow px-1">PASSIVE</span></h4>
                             <p class="text-[10px] text-gray-400 leading-relaxed mono">Авто-подсветка потянутых UV и мыльных текстур. Критический урон конструктивным фидбеком на ревью.</p>
                         </div>
                     </div>
@@ -517,8 +475,8 @@
                             <span class="mono text-xs">GEN</span>
                         </div>
                         <div class="z-10">
-                            <h4 class="text-xs font-bold text-white mb-1 mono">Процедурный движок_ <span class="text-[8px] text-black bg-cp-cyan px-1">ACTIVE</span></h4>
-                            <p class="text-[10px] text-gray-400 leading-relaxed mono">Скастовать горный массив из одного куба в Houdini. Экономит вычислительные ресурсы арт-команды.</p>
+                            <h4 class="text-xs font-bold text-white mb-1 mono">Генератор идей_ <span class="text-[8px] text-black bg-cp-cyan px-1">ACTIVE</span></h4>
+                            <p class="text-[10px] text-gray-400 leading-relaxed mono">Помогает находить новые подходы и улучшать сцены без потери стилистики.</p>
                         </div>
                     </div>
                 </div>
