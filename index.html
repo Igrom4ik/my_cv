@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игорь Унгурьянов - SYS.PROFILE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cp-yellow': '#fcee0a',
+                        'cp-red': '#ff003c',
+                        'cp-cyan': '#00f0ff',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg-deep: #050505;
+            --panel-bg: rgba(10, 10, 12, 0.85);
+            --border-tech: #2a2a2a;
+            --neon-cyan: #00f0ff;
+            --neon-magenta: #ff003c;
+            --neon-green: #39ff14;
+            --neon-yellow: #fcee0a;
+            --text-main: #e0e0e0;
+            --text-dim: #7a7a7a;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            /* Sci-fi Grid Background - Tinted Yellow */
+            background-image: 
+                linear-gradient(rgba(252, 238, 10, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(252, 238, 10, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center center;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Sci-Fi Panels */
+        .sci-fi-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-tech);
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        /* Tech Corner Markers - Now Cyberpunk Yellow */
+        .sci-fi-card::before, .sci-fi-card::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 2px solid var(--neon-yellow);
+            transition: all 0.3s ease;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .sci-fi-card::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+        .sci-fi-card::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+        
+        .sci-fi-card:hover {
+            border-color: rgba(252, 238, 10, 0.3);
+            box-shadow: 0 0 20px rgba(252, 238, 10, 0.05) inset, 0 8px 32px rgba(0,0,0,0.5);
+        }
+        .sci-fi-card:hover::before, .sci-fi-card:hover::after {
+            opacity: 1;
+            box-shadow: 0 0 10px var(--neon-yellow);
+            width: 25px;
+            height: 25px;
+        }
+
+        /* HUD Bars */
+        .stat-bar-container {
+            background: rgba(0, 0, 0, 0.8);
+            height: 6px;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--neon-yellow);
+            box-shadow: 0 0 10px var(--neon-yellow);
+            transition: width 1.5s cubic-bezier(0.1, 0.8, 0.2, 1);
+        }
+
+        /* Inventory Tags */
+        .tech-tag {
+            background: rgba(252, 238, 10, 0.05);
+            border: 1px solid var(--border-tech);
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            color: var(--neon-yellow);
+            transition: all 0.2s ease;
+            cursor: default;
+            text-transform: uppercase;
+        }
+
+        .tech-tag:hover {
+            background: var(--neon-yellow);
+            border-color: var(--neon-yellow);
+            color: #000;
+            box-shadow: 0 0 15px rgba(252, 238, 10, 0.4);
+            font-weight: bold;
+        }
+
+        /* Accordion styles */
+        .quest-content {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows 0.3s ease-out, opacity 0.3s ease-out;
+        }
+        .quest-content.open {
+            grid-template-rows: 1fr;
+            opacity: 1;
+        }
+        .quest-content-inner {
+            overflow: hidden;
+        }
+
+        /* Glitch Text Effect */
+        .glitch-hover:hover {
+            animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+            color: var(--neon-yellow);
+            text-shadow: 2px 0 var(--neon-cyan), -2px 0 var(--neon-magenta);
+        }
+        @keyframes glitch-skew {
+            0% { transform: skew(0deg); }
+            20% { transform: skew(-10deg); }
+            40% { transform: skew(10deg); }
+            60% { transform: skew(-5deg); }
+            80% { transform: skew(5deg); }
+            100% { transform: skew(0deg); }
+        }
+
+        /* Avatar Scanline */
+        .avatar-container {
+            clip-path: polygon(20% 0%, 100% 0, 100% 80%, 80% 100%, 0 100%, 0% 20%);
+        }
+        .scanline {
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: var(--neon-yellow);
+            box-shadow: 0 0 15px var(--neon-yellow), 0 0 30px var(--neon-yellow);
+            animation: scan 3s linear infinite;
+            z-index: 20;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+        @keyframes scan {
+            0% { top: -5%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 105%; opacity: 0; }
+        }
+
+        /* Core System Bars (HP, MP, SP) */
+        .sys-bar-container {
+            background: rgba(0,0,0,0.8);
+            height: 16px; /* Увеличена высота бара */
+            border: 1px solid var(--border-tech);
+            position: relative;
+            transform: skew(-15deg);
+            overflow: hidden;
+        }
+        
+        .sys-bar-fill {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: width 1s ease-in-out;
+            background-image: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 4px,
+                rgba(0,0,0,0.3) 4px,
+                rgba(0,0,0,0.3) 8px
+            );
+        }
+
+        /* Обновленный яркий пульс с большой амплитудой */
+        .pulse-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='16' viewBox='0 0 100 16'%3E%3Cpath d='M0,8 L15,8 L25,2 L35,14 L45,8 L100,8' fill='none' stroke='rgba(255,255,255,1)' stroke-width='2' filter='drop-shadow(0px 0px 2px rgba(255,255,255,0.8))'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-position: left center;
+            animation: move-pulse 1s linear infinite;
+        }
+        
+        @keyframes move-pulse {
+            0% { background-position: 0 center; }
+            100% { background-position: -100px center; }
+        }
+
+        /* CP2077 Button Clip Path */
+        .cp-btn {
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+    </style>
+</head>
+<body class="min-h-screen py-12 px-4 flex justify-center items-start">
+
+    <div class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-12 gap-6 relative z-10">
+        
+        <!-- Sidebar: Personal Info -->
+        <aside class="md:col-span-4 space-y-6">
+            <div class="sci-fi-card p-6 text-center relative border-t-4 border-t-cp-yellow">
+                <div class="absolute top-2 left-2 text-[8px] mono text-cp-yellow bg-cp-yellow/10 px-1">SYS.ID // 860113</div>
+                <div class="absolute top-2 right-2 text-[8px] mono text-cp-yellow bg-cp-yellow/10 px-1">ONLINE_</div>
+
+                <div class="relative inline-block mb-4 mt-4 group cursor-pointer">
+                    <!-- Avatar with Sci-Fi Cut and Scanline -->
+                    <div class="w-32 h-32 avatar-container overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700 border-2 border-cp-yellow relative bg-black">
+                        <img src="https://placehold.co/400x400/030613/fcee0a?text=V" alt="Profile" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 mix-blend-screen">
+                        <div class="scanline group-hover:opacity-50 group-hover:h-[2px]"></div>
+                    </div>
+                    <!-- Cyber Badge CP Style -->
+                    <div class="absolute -bottom-2 -right-4 bg-cp-yellow px-3 py-1 text-[12px] mono font-bold text-black shadow-[0_0_15px_rgba(252,238,10,0.6)] transform -skew-x-12">
+                        LVL_40
+                    </div>
+                </div>
+                
+                <h1 class="text-xl font-bold tracking-widest uppercase mono text-white glitch-hover mt-2">Игорь Унгурьянов</h1>
+                <p class="text-[10px] text-cp-yellow mt-1 uppercase tracking-[0.3em] mono font-bold">Senior Env_Artist</p>
+                
+                <div class="mt-6 pt-6 border-t border-slate-800/50 text-left space-y-3 mono text-xs">
+                    <div class="flex justify-between items-end border-b border-slate-800/50 pb-1">
+                        <span class="text-slate-500 uppercase">LOC_</span>
+                        <span class="text-gray-200">Калининград, РФ</span>
+                    </div>
+                    <div class="flex justify-between items-end border-b border-slate-800/50 pb-1">
+                        <span class="text-slate-500 uppercase">STATUS_</span>
+                        <span class="text-cp-yellow text-shadow-[0_0_5px_rgba(252,238,10,0.5)] font-bold">Готов к загрузке</span>
+                    </div>
+                    <div class="flex justify-between items-end border-b border-slate-800/50 pb-1">
+                        <span class="text-slate-500 uppercase">UPTIME_</span>
+                        <span class="text-gray-200">6.5 Циклов (Лет)</span>
+                    </div>
+                </div>
+
+                <!-- HUD System Bars -->
+                <div class="mt-8 text-left space-y-5">
+                    <!-- HP -> System Integrity -->
+                    <div>
+                        <div class="flex justify-between text-[9px] mono mb-1.5 uppercase tracking-widest font-bold">
+                            <span class="text-cp-red">СИСТЕМНАЯ ЦЕЛОСТНОСТЬ</span>
+                            <span class="text-cp-red">100%</span>
+                        </div>
+                        <div class="sys-bar-container">
+                            <div class="sys-bar-fill bg-cp-red box-shadow-[0_0_10px_#ff003c]" style="width: 100%;">
+                                <!-- Более четкая и высокая линия пульса -->
+                                <div class="pulse-line"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MP -> Core Energy -->
+                    <div>
+                        <div class="flex justify-between text-[9px] mono mb-1.5 uppercase tracking-widest font-bold">
+                            <span class="text-cp-cyan">ЭНЕРГИЯ ЯДРА (КРЕАТИВ)</span>
+                            <span class="text-cp-cyan">85%</span>
+                        </div>
+                        <div class="sys-bar-container">
+                            <div class="sys-bar-fill bg-cp-cyan box-shadow-[0_0_10px_#00f0ff]" style="width: 85%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- SP -> RAM/Stamina -->
+                    <div>
+                        <div class="flex justify-between text-[9px] mono mb-1.5 uppercase tracking-widest font-bold">
+                            <span class="text-cp-yellow">ОПЕРАТИВНАЯ ПАМЯТЬ</span>
+                            <span class="text-cp-yellow">90%</span>
+                        </div>
+                        <div class="sys-bar-container">
+                            <div class="sys-bar-fill bg-cp-yellow box-shadow-[0_0_10px_#fcee0a]" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attributes -->
+            <div class="sci-fi-card p-6">
+                <h3 class="text-[10px] mono text-cp-yellow uppercase mb-5 tracking-[0.2em] flex items-center gap-2 font-bold">
+                    <span class="w-2 h-2 bg-cp-yellow inline-block"></span> CORE_ATTRIBUTES
+                </h3>
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-[10px] mb-1 uppercase mono text-gray-300">
+                            <span title="Modular Environment, Architectural Modeling, Props">GEO_MOD // Моделирование</span>
+                            <span class="text-cp-yellow">19.0</span>
+                        </div>
+                        <div class="stat-bar-container"><div class="stat-bar-fill" data-percent="95%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[10px] mb-1 uppercase mono text-gray-300">
+                            <span title="PBR, Trims, Atlases, Baking">TEX_SYS // Текстурирование</span>
+                            <span class="text-cp-yellow">18.0</span>
+                        </div>
+                        <div class="stat-bar-container"><div class="stat-bar-fill" data-percent="90%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[10px] mb-1 uppercase mono text-gray-300">
+                            <span title="LODs, Draw calls, Game-ready">OPT_ENG // Оптимизация</span>
+                            <span class="text-cp-yellow">19.0</span>
+                        </div>
+                        <div class="stat-bar-container"><div class="stat-bar-fill" data-percent="95%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-[10px] mb-1 uppercase mono text-gray-300">
+                            <span title="Процессы, ревью, фидбек">LDR_NET // Лидерство</span>
+                            <span class="text-cp-yellow">15.0</span>
+                        </div>
+                        <div class="stat-bar-container"><div class="stat-bar-fill bg-yellow-700" data-percent="75%"></div></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contacts Mini -->
+            <div class="sci-fi-card p-6 border-l-2 border-l-cp-yellow">
+                 <h3 class="text-[10px] mono text-cp-yellow uppercase mb-4 tracking-[0.2em] font-bold">COMM_LINKS</h3>
+                 <div class="space-y-2 text-xs mono">
+                     <a href="https://t.me/igrom" target="_blank" class="flex items-center gap-2 text-cp-cyan hover:text-black hover:bg-cp-cyan p-1 -ml-1 transition-colors font-bold">
+                        <span>>></span> TG_DIR: @igrom
+                     </a>
+                     <a href="mailto:igrom4ikus@gmail.com" class="flex items-center gap-2 text-gray-300 hover:text-black hover:bg-cp-yellow p-1 -ml-1 transition-colors font-bold">
+                        <span class="text-cp-yellow group-hover:text-black">>></span> MAIL_OBJ: igrom4ikus...
+                     </a>
+                 </div>
+            </div>
+        </aside>
+
+        <main class="md:col-span-8 space-y-6">
+            <!-- Summary -->
+            <section class="sci-fi-card p-8">
+                <h3 class="text-[10px] mono text-cp-yellow uppercase mb-4 tracking-[0.2em] flex items-center gap-2 font-bold">
+                    <span class="w-2 h-2 bg-cp-yellow inline-block animate-pulse"></span> USER_DATA_LOG
+                </h3>
+                <p class="text-sm leading-relaxed text-gray-300 font-light border-l-2 border-cp-yellow pl-4 bg-gradient-to-r from-cp-yellow/5 to-transparent py-2">
+                    Senior Environment Artist с опытом работы в геймдеве более 6 лет. Обладаю широкой насмотренностью и специализируюсь на создании высококачественного окружения для мобильных и кроссплатформенных проектов (Open World, Sandbox). Имеется обширная работа с окружением: отлично знаю как модульный, так и классический пайплайны, активно участвовал в разработке подходов к контенту. <br><br>
+                    Имею опыт в руководстве командой художников: умею выстраивать процессы, контролировать качество (ревью, фидбеки), сроки и технические требования, а также организовывать работу с контентом.
+                </p>
+            </section>
+
+            <!-- Experience / Quest Log -->
+            <section class="sci-fi-card p-8">
+                <div class="flex justify-between items-end mb-6 border-b border-slate-800 pb-2">
+                    <h3 class="text-[10px] mono text-cp-yellow uppercase tracking-[0.2em] font-bold">MISSION_ARCHIVE</h3>
+                    <span class="text-[8px] mono text-cp-yellow bg-cp-yellow/10 px-1">3 RECORDS FOUND</span>
+                </div>
+                
+                <div class="space-y-6">
+                    <!-- Job 1 -->
+                    <div class="relative pl-6 border-l border-cp-yellow group">
+                        <div class="absolute w-3 h-3 bg-cp-yellow shadow-[0_0_8px_#fcee0a] -left-[7px] top-1.5 transition-all group-hover:scale-125"></div>
+                        <div class="quest-header flex justify-between items-start mb-2 gap-2 cursor-pointer select-none">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <h4 class="text-sm font-bold text-white uppercase mono group-hover:text-cp-yellow transition-colors">Senior Environment Artist</h4>
+                                    <span class="text-[9px] mono text-black bg-cp-yellow px-1.5 font-bold">ACTIVE_NODE</span>
+                                </div>
+                                <p class="text-xs text-cp-cyan mono">EVEGOPLAYON // Ташкент // T: -2г 2м</p>
+                            </div>
+                            <span class="quest-icon text-cp-yellow text-xs mono transform transition-transform duration-300 mt-1 font-bold">[ - ]</span>
+                        </div>
+                        <div class="quest-content open">
+                            <div class="quest-content-inner bg-[#0a0a0c] p-4 border border-[#2a2a2a] mt-2 text-xs text-gray-400 leading-relaxed mono">
+                                <ul class="space-y-2">
+                                    <li><span class="text-cp-yellow mr-2">></span>Применение модульного и классического пайплайнов, участие в разработке подходов к созданию контента.</li>
+                                    <li><span class="text-cp-yellow mr-2">></span>Создание уникальных объектов окружения в semi-realistic/realistic стиле: direct modeling архитектуры, скал, террейна и пропсов.</li>
+                                    <li><span class="text-cp-yellow mr-2">></span>Разработка процедурных инструментов в <span class="text-cp-cyan font-bold">Houdini</span> для ускоренной сборки локаций (ландшафты, скалы).</li>
+                                    <li><span class="text-cp-yellow mr-2">></span>Адаптация и оптимизация моделей под строгие тех. требования (мобильные + ПК): game-ready ассеты, LOD-ы, low-poly.</li>
+                                    <li><span class="text-cp-yellow mr-2">></span>Текстурирование: тайлы, трим-шиты (trims) и атласы для оптимизации draw calls; работа с PBR.</li>
+                                    <li><span class="text-cp-yellow mr-2">></span>Настройка материалов, управление освещением и эффектами, композиционные решения.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job 2 -->
+                    <div class="relative pl-6 border-l border-slate-700 group hover:border-cp-yellow transition-colors">
+                        <div class="absolute w-2 h-2 bg-slate-600 -left-[4.5px] top-1.5 transition-all group-hover:bg-cp-yellow group-hover:shadow-[0_0_5px_#fcee0a]"></div>
+                        <div class="quest-header flex justify-between items-start mb-2 gap-2 cursor-pointer select-none">
+                            <div>
+                                <h4 class="text-sm font-bold text-gray-300 uppercase mono group-hover:text-cp-yellow transition-colors mb-1">Environment Artist (Open World)</h4>
+                                <p class="text-xs text-slate-500 mono group-hover:text-gray-400">Jet Games // Санкт-Петербург // T: -4г 3м</p>
+                            </div>
+                            <span class="quest-icon text-cp-yellow text-xs mono transform transition-all duration-300 mt-1 font-bold group-hover:text-white group-hover:text-shadow-[0_0_5px_rgba(252,238,10,0.8)]">[ + ]</span>
+                        </div>
+                        <div class="quest-content">
+                            <div class="quest-content-inner bg-[#0a0a0c] p-4 border border-[#2a2a2a] mt-2 text-xs text-gray-400 leading-relaxed mono">
+                                <ul class="space-y-2">
+                                    <li><span class="text-slate-600 mr-2 group-hover:text-cp-yellow">></span>Работа над мобильным сетевым sandbox-экшеном (Grand Criminal Online).</li>
+                                    <li><span class="text-slate-600 mr-2 group-hover:text-cp-yellow">></span>Разработка 3D-пропсов и городского окружения: модульные здания, архитектура (интерьеры/экстерьеры).</li>
+                                    <li><span class="text-slate-600 mr-2 group-hover:text-cp-yellow">></span>Полный цикл текстурирования (развертка, запекание, атласы, тайлы) для высокой производительности на смартфонах.</li>
+                                    <li><span class="text-slate-600 mr-2 group-hover:text-cp-yellow">></span>Участие в формировании визуала: грейбоксинг, расстановка объектов, Level dressing.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job 3 -->
+                    <div class="relative pl-6 border-l border-slate-700 group hover:border-cp-yellow transition-colors">
+                        <div class="absolute w-2 h-2 bg-slate-600 -left-[4.5px] top-1.5 transition-all group-hover:bg-cp-yellow group-hover:shadow-[0_0_5px_#fcee0a]"></div>
+                        <div class="quest-header flex justify-between items-start mb-2 gap-2 cursor-pointer select-none">
+                            <div>
+                                <h4 class="text-sm font-bold text-gray-300 uppercase mono group-hover:text-cp-yellow transition-colors mb-1">3D-моделлер</h4>
+                                <p class="text-xs text-slate-500 mono group-hover:text-gray-400">STSTC // Калининград // T: -1г 4м</p>
+                            </div>
+                            <span class="quest-icon text-cp-yellow text-xs mono transform transition-all duration-300 mt-1 font-bold group-hover:text-white group-hover:text-shadow-[0_0_5px_rgba(252,238,10,0.8)]">[ + ]</span>
+                        </div>
+                        <div class="quest-content">
+                            <div class="quest-content-inner bg-[#0a0a0c] p-4 border border-[#2a2a2a] mt-2 text-xs text-gray-400 leading-relaxed mono">
+                                <ul class="space-y-2">
+                                    <li><span class="text-slate-600 mr-2 group-hover:text-cp-yellow">></span>Моделирование game-ready элементов окружения и пропсов (low-poly), UV-развертка, LOD-ирование.</li>
+                                    <li><span class="text-slate-600 mr-2 group-hover:text-cp-yellow">></span>Текстурирование, интеграция и настройка моделей в движке (материалы, освещение).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills / Inventory -->
+            <section class="sci-fi-card p-8">
+                <h3 class="text-[10px] mono text-cp-yellow uppercase mb-6 tracking-[0.2em] font-bold">EQUIPPED_MODULES</h3>
+                
+                <div class="mb-3 text-[10px] text-gray-500 mono tracking-widest">// SOFTWARE_ENGINES</div>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span class="tech-tag border-cp-yellow/50 text-cp-yellow">Blender 3D</span>
+                    <span class="tech-tag border-cp-yellow/50 text-cp-yellow">Houdini</span>
+                    <span class="tech-tag border-cp-yellow/50 text-cp-yellow">Substance 3D Painter</span>
+                    <span class="tech-tag border-cp-yellow/50 text-cp-yellow">Substance Designer</span>
+                    <span class="tech-tag border-slate-700 text-gray-400">RizomUV</span>
+                    <span class="tech-tag border-slate-700 text-gray-400">Marmoset Toolbag</span>
+                    <span class="tech-tag border-slate-700 text-gray-400">Adobe Photoshop</span>
+                </div>
+
+                <div class="mb-3 text-[10px] text-gray-500 mono tracking-widest">// PIPELINE_PROTOCOLS</div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="tech-tag border-slate-700 text-gray-400">Game-Ready Models</span>
+                    <span class="tech-tag border-slate-700 text-gray-400">Low-Poly / Mid-Poly</span>
+                    <span class="tech-tag border-slate-700 text-gray-400">Modular Env</span>
+                    <span class="tech-tag border-slate-700 text-gray-400">Architectural Modeling</span>
+                    <span class="tech-tag border-slate-700 text-gray-400">Tileable Textures</span>
+                    <span class="tech-tag border-slate-700 text-gray-400">Trim Sheets</span>
+                    <span class="tech-tag border-slate-700 text-gray-400">Texture Atlas</span>
+                    <span class="tech-tag border-slate-700 text-gray-400">PBR Texturing & Baking</span>
+                    <span class="tech-tag border-slate-700 text-gray-400">Optimization & LODs</span>
+                    <span class="tech-tag border-slate-700 text-gray-400">Scene composition</span>
+                </div>
+            </section>
+
+            <!-- Active Buffs & Perks -->
+            <section class="sci-fi-card p-8 border-b-4 border-b-cp-yellow">
+                <h3 class="text-[10px] mono text-cp-yellow uppercase mb-6 tracking-[0.2em] font-bold">CYBERWARE_IMPLANTS</h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Perk 1 -->
+                    <div class="flex gap-4 p-4 bg-[#0a0a0c] border border-[#2a2a2a] hover:border-cp-red/50 transition-colors group relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-8 h-8 bg-cp-red/10 rounded-bl-full transition-transform group-hover:scale-150"></div>
+                        <div class="flex-shrink-0 w-10 h-10 border border-cp-red/50 flex items-center justify-center text-cp-red group-hover:shadow-[0_0_15px_rgba(255,0,60,0.3)] bg-black z-10 font-bold">
+                            <span class="mono text-xs">DEF</span>
+                        </div>
+                        <div class="z-10">
+                            <h4 class="text-xs font-bold text-white mb-1 mono">Титановый каркас_ <span class="text-[8px] text-black bg-cp-red px-1">PASSIVE</span></h4>
+                            <p class="text-[10px] text-gray-400 leading-relaxed mono">Полный иммунитет к горящим дедлайнам. +50% к стабильности ЦНС при падении серверов сборки.</p>
+                        </div>
+                    </div>
+
+                    <!-- Perk 2 -->
+                    <div class="flex gap-4 p-4 bg-[#0a0a0c] border border-[#2a2a2a] hover:border-cp-green/50 transition-colors group relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-8 h-8 bg-neon-green/10 rounded-bl-full transition-transform group-hover:scale-150"></div>
+                        <div class="flex-shrink-0 w-10 h-10 border border-neon-green/50 flex items-center justify-center text-neon-green group-hover:shadow-[0_0_15px_rgba(57,255,20,0.3)] bg-black z-10 font-bold">
+                            <span class="mono text-xs">MED</span>
+                        </div>
+                        <div class="z-10">
+                            <h4 class="text-xs font-bold text-white mb-1 mono">Медицинский модуль_ <span class="text-[8px] text-black bg-neon-green px-1">AURA</span></h4>
+                            <p class="text-[10px] text-gray-400 leading-relaxed mono">Скрытый навык из прошлого. Регенит мораль команды и снимает дебафф «Токсичность» в радиусе 10м.</p>
+                        </div>
+                    </div>
+
+                    <!-- Perk 3 -->
+                    <div class="flex gap-4 p-4 bg-[#0a0a0c] border border-[#2a2a2a] hover:border-cp-yellow/50 transition-colors group relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-8 h-8 bg-cp-yellow/10 rounded-bl-full transition-transform group-hover:scale-150"></div>
+                        <div class="flex-shrink-0 w-10 h-10 border border-cp-yellow/50 flex items-center justify-center text-cp-yellow group-hover:shadow-[0_0_15px_rgba(252,238,10,0.3)] bg-black z-10 font-bold">
+                            <span class="mono text-xs">OPT</span>
+                        </div>
+                        <div class="z-10">
+                            <h4 class="text-xs font-bold text-white mb-1 mono">Оптический имплант_ <span class="text-[8px] text-black bg-cp-yellow px-1">PASSIVE</span></h4>
+                            <p class="text-[10px] text-gray-400 leading-relaxed mono">Авто-подсветка потянутых UV и мыльных текстур. Критический урон конструктивным фидбеком на ревью.</p>
+                        </div>
+                    </div>
+
+                    <!-- Perk 4 -->
+                    <div class="flex gap-4 p-4 bg-[#0a0a0c] border border-[#2a2a2a] hover:border-cp-cyan/50 transition-colors group relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-8 h-8 bg-cp-cyan/10 rounded-bl-full transition-transform group-hover:scale-150"></div>
+                        <div class="flex-shrink-0 w-10 h-10 border border-cp-cyan/50 flex items-center justify-center text-cp-cyan group-hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] bg-black z-10 font-bold">
+                            <span class="mono text-xs">GEN</span>
+                        </div>
+                        <div class="z-10">
+                            <h4 class="text-xs font-bold text-white mb-1 mono">Процедурный движок_ <span class="text-[8px] text-black bg-cp-cyan px-1">ACTIVE</span></h4>
+                            <p class="text-[10px] text-gray-400 leading-relaxed mono">Скастовать горный массив из одного куба в Houdini. Экономит вычислительные ресурсы арт-команды.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer: Actions -->
+            <footer class="flex flex-col sm:flex-row gap-4 pt-4 pb-12">
+                <a href="https://www.artstation.com/igrom" target="_blank" class="cp-btn flex-1 bg-cp-yellow hover:bg-white text-black text-center py-5 mono font-bold text-[14px] uppercase transition-all shadow-[0_0_15px_rgba(252,238,10,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.6)]">
+                    [ PORTFOLIO_LINK // ARTSTATION ]
+                </a>
+                <a href="https://www.linkedin.com/in/igor-unguryanov/" target="_blank" class="cp-btn flex-1 bg-[#1a1a1a] hover:bg-cp-cyan text-cp-cyan hover:text-black text-center py-5 mono font-bold text-[14px] uppercase transition-all border border-cp-cyan">
+                    [ ESTABLISH_LINK // LINKEDIN ]
+                </a>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Animate progress bars
+            const bars = document.querySelectorAll('.stat-bar-fill');
+            setTimeout(() => {
+                bars.forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-percent');
+                });
+            }, 300);
+
+            // Accordion logic for quests with terminal text swap
+            const questHeaders = document.querySelectorAll('.quest-header');
+            questHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('.quest-icon');
+                    
+                    content.classList.toggle('open');
+                    
+                    if (content.classList.contains('open')) {
+                        icon.innerText = '[ - ]';
+                    } else {
+                        icon.innerText = '[ + ]';
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
